@@ -1,6 +1,8 @@
 #ifndef ARMPMU_LIB_H
 #define ARMPMU_LIB_H
 
+#include <stdint.h>
+
 #if defined(__GNUC__) && defined(__ARM_ARCH_7A__)
 
 #define PMU_REGISTER(CRn, CRm, Op2) \
@@ -31,6 +33,17 @@
 
 #define MRC_PMU(REG, PMU_REG) xMRC_PMU(REG, PMU_REG)
 #define MCR_PMU(REG, PMU_REG) xMCR_PMU(REG, PMU_REG)
+
+// Convenience functions
+
+// Returns the value of the given counter.
+uint32_t read_pmn(uint32_t counter);
+
+// Resets all counters.
+void reset_pmn();
+
+// Resets the Cycle Count (PMCCNTR).
+void reset_ccnt();
 
 #else
 #error Unsupported architecture/compiler!
