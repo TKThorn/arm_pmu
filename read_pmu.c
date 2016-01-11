@@ -34,12 +34,12 @@ int main(int argc, char **argv)
 	setaff(cpu);
 
 	uint32_t cycles;
-	MRC_PMU(cycles, c9, c13, 0);
+	MRC_PMU(cycles, PMCCNTR);
 	printf("Cycle Count: %"PRIu32"\n", cycles);
 
 	uint32_t pmceid0, pmceid1;
-	MRC_PMU(pmceid0, c9, c12, 6);
-	MRC_PMU(pmceid1, c9, c12, 7);
+	MRC_PMU(pmceid0, PMCEID0);
+	MRC_PMU(pmceid1, PMCEID1);
 	printf("PMCEID0: %"PRIx32"\n", pmceid0);
 	printf("PMCEID1: %"PRIx32"\n", pmceid1);
 	return 0;
