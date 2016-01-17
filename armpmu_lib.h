@@ -19,6 +19,7 @@
 #define PMSWINC    PMU_REGISTER(c9, c12, 4) // Software Increment Register
 #define PMOVSSET   PMU_REGISTER(c9, c14, 3) // Performance Monitor Overflow Status Set Register
 #define PMCR       PMU_REGISTER(c9, c12, 0) // Performance Monitor Control Register
+#define PMUSERENR  PMU_REGISTER(c9, c14, 0) // User Enable Register
 #define PMCEID0    PMU_REGISTER(c9, c12, 6) // Common Event Identification Register 0
 #define PMCEID1    PMU_REGISTER(c9, c12, 7) // Common Event Identification Register 1
 #define PMSELR     PMU_REGISTER(c9, c12, 5) // Event Counter Selection Register

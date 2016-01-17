@@ -27,6 +27,13 @@ void setaff(int cpu) {
 
 int main(int argc, char **argv)
 {
+	uint32_t pmuserenr;
+	MRC_PMU(pmuserenr, PMUSERENR);
+	if (!pmuserenr) {
+		fprintf(stderr, "User access to performance counters disabled, exiting\n");
+		return 1;
+	}
+
 	int cpu = getcpu();
 	printf("Executing CPU: %d\n", cpu);
 	// Set CPU affinity to make sure that the following code is executed on the
