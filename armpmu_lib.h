@@ -108,6 +108,14 @@ enum {
 
 // Convenience functions
 
+// Enables performance monitoring.
+void enable_pmn();
+// Disables performance monitoring.
+void disable_pmn();
+
+// Sets the given counter to monitor a particular event.
+void set_pmn(uint32_t counter, uint32_t event);
+
 // Returns the value of the given counter.
 uint32_t read_pmn(uint32_t counter);
 
