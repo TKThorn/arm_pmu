@@ -24,13 +24,13 @@
 #define PMCEID1    PMU_REGISTER(c9, c12, 7) // Common Event Identification Register 1
 #define PMSELR     PMU_REGISTER(c9, c12, 5) // Event Counter Selection Register
 
-// Move register to coprocessor.
+// Read register from coprocessor.
 #define xMRC_PMU(REG, PMU_REG) \
 	asm volatile("mrc p15, 0, %0, " PMU_REG : "=r"(REG) );
 
-// Move from coprocessor to register.
+// Write register to coprocessor.
 #define xMCR_PMU(REG, PMU_REG) \
-	asm volatile("mcr p15, 0, %0, " PMU_REG : "=r"(REG) );
+	asm volatile("mcr p15, 0, %0, " PMU_REG : /* no out */ : "r"(REG) );
 
 #define MRC_PMU(REG, PMU_REG) xMRC_PMU(REG, PMU_REG)
 #define MCR_PMU(REG, PMU_REG) xMCR_PMU(REG, PMU_REG)
