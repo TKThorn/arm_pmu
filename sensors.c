@@ -31,3 +31,23 @@ float read_a7_power()
 {
 	return read_sensor("2-0045", 'W');
 }
+
+int read_a15_temperature()
+{
+	FILE *f = NULL;
+	f = fopen("/sys/devices/virtual/thermal/thermal_zone0/temp", "r");
+	if (f == NULL) {
+		perror("Could not open temperature sensor node");
+		return -1;
+	}
+
+	int result = -1;
+	if (fscanf(f, "%i", &result) != 1) {
+		fprintf(stderr, "Temperature sensor reading failed");
+	} else {
+		result /= 1000;
+	}
+
+	fclose(f);
+	return result;
+}
