@@ -1,2 +1,4 @@
 *.o
+/analyze
 /read_pmu
+/read_sensors

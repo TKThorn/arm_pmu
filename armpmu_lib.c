@@ -1,5 +1,37 @@
 #include "armpmu_lib.h"
 
+void enable_pmn()
+{
+	uint32_t cr;
+	// Read the control register.
+	MRC_PMU(cr, PMCR);
+	// Set the "Enable" bit 0.
+	cr |= 1;
+	// Write the control register back.
+	MCR_PMU(cr, PMCR);
+}
+
+void disable_pmn()
+{
+	uint32_t cr;
+	// Read the control register.
+	MRC_PMU(cr, PMCR);
+	// Unset the "Enable" bit 0.
+	cr &= ~1;
+	// Write the control register back.
+	MCR_PMU(cr, PMCR);
+}
+
+void set_pmn(uint32_t counter, uint32_t event)
+{
+	// Only four bits are valid, rest is reserved.
+	counter &= 0xf;
+	// Select the given counter.
+	MCR_PMU(counter, PMSELR);
+	// Set the event.
+	MCR_PMU(event, PMXEVTYPER);
+}
+
 uint32_t read_pmn(uint32_t counter)
 {
 	uint32_t result;
