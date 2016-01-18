@@ -1,2 +1,3 @@
 *.o
 /read_pmu
+/read_sensors
