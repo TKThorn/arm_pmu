@@ -2,7 +2,7 @@ all: read_pmu read_sensors
 
 CFLAGS := -O3 -std=gnu11 
 
-read_pmu: read_pmu.c armpmu_lib.o
+read_pmu: read_pmu.c helpers.o armpmu_lib.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 read_sensors: read_sensors.c sensors.o
