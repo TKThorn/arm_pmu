@@ -1,6 +1,9 @@
-all: read_pmu read_sensors
+all: analyze read_pmu read_sensors
 
 CFLAGS := -O3 -std=gnu11 
+
+analyze: analyze.c armpmu_lib.o helpers.o sensors.o test_programs.o
+	$(CC) $(CFLAGS) -pthread $^ -o $@
 
 read_pmu: read_pmu.c helpers.o armpmu_lib.o
 	$(CC) $(CFLAGS) $^ -o $@
