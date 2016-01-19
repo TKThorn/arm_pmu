@@ -1,6 +1,3 @@
-//
-// Created by thomas on 17.01.16.
-//
 
 #define _GNU_SOURCE
 #include <stdio.h>
@@ -10,46 +7,22 @@
 #include <sched.h>
 #include <cstdlib>
 
-#include "armpmu_lib.h"
 
-// sched_getcpu isn't defined here for some reason.
-int getcpu() {
-    int cpu = -1;
-    if (syscall(SYS_getcpu, &cpu, NULL, NULL) == -1) {
-        return -1;
-    }
-    return cpu;
-}
-
-void setaff(int cpu) {
-    cpu_set_t set;
-    CPU_ZERO(&set);
-    CPU_SET(cpu, &set);
-    if (sched_setaffinity(0, sizeof(set), &set)) {
-        perror("Could not set affinity.");
-    }
-}
-
+//choosing type of test
 int main(int argc, char **argv) {
-    int cpu = getcpu();
-    printf("Executing CPU: %d\n", cpu);
-    // Set CPU affinity to make sure that the following code is executed on the
-    // CPU printed above.
-    setaff(cpu);
-
     if (argc < 2) {
         printf("set number of cycles\n");
         exit(-1);
     } else {
         double loop_limit = atoi(argv[2]);
-        if(strcmp(argv[1], "dcache")) {
-            dcache_misses_generator(loop_limit);
-        } else if (strcmp(argv[1], "cycle")) {
-            cycle_generator(loop_limit);
+        if(strcmp(argv[1], "add")) {
+            add_generator(loop_limit);
+        } else if (strcmp(argv[1], "mov")) {
+            mov_generator(loop_limit);
         } else if (strcmp(argv[1], "branch")) {
             branch_generator(loop_limit);
-        } else {
-            instruction_exec_generator(loop_limit);
+        } else if (strcmp(argv[1], "mul")){
+            mul_generator(loop_limit);
         }
     }
     return 0;
@@ -57,34 +30,48 @@ int main(int argc, char **argv) {
 
 //from here on are the definitions of each test
 
-void dcache_misses_generator(double cycles) {
+//generate a number of single mul instructions
+void mul_generator(double cycles) {
+    double var1 = 2;
+    double var2 = 2;
     printf("You are using dcache");
     for (int i = 0; i < cycles; i++) {
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
 
     }
 }
 
-void cycle_generator(double cycles) {
+//generate a number of single mov instructions
+void mov_generator(double cycles) {
     printf("You are using cycles");
+    int src = 1;
+    int dest;
     for (int i = 0; i < cycles; i++) {
-
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
     }
 
 }
 
+//generate a number of branch instructions
 void branch_generator(double cycles) {
     printf("You are using branch");
+    int foo = 0;
     for (int i = 0; i < cycles; i++) {
-
+        if (i % 2 == 0) {
+            foo ++;
+        } else {
+            foo += 2;
+        }
     }
-
 }
 
-void instruction_exec_generator(double cycles) {
+//generate a number of single add instructions
+void add_generator(double cycles) {
     printf("You are using instruction counter");
-    unsigned int var = 2;
+    int count = 1;
+    int curr = 0;
     for (int i = 0; i < cycles; i++) {
-        var *= 2;
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
     }
 }
 
