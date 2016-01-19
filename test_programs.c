@@ -12,7 +12,7 @@ static void dummy()
 }
 
 //generate a number of single mul instructions
-void mul_generator(int cycles) {
+void mul_generator(long long cycles) {
     int var1 = 2;
     int var2 = 2;
     for (int i = 0; i < cycles; i++) {
@@ -22,7 +22,7 @@ void mul_generator(int cycles) {
 }
 
 //generate a number of single mov instructions
-void mov_generator(int cycles) {
+void mov_generator(long long cycles) {
     int src = 1;
     int dest;
     for (int i = 0; i < cycles; i++) {
@@ -32,7 +32,7 @@ void mov_generator(int cycles) {
 }
 
 //generate a number of branch instructions
-void branch_generator(int cycles) {
+void branch_generator(long long cycles) {
     static int foo = 0;
     for (int i = 0; i < cycles; i++) {
         if ((i % 2) + (i % 3) + (i % 5)  == 2) {
@@ -44,7 +44,7 @@ void branch_generator(int cycles) {
 }
 
 //generate a number of single add instructions
-void add_generator(int cycles) {
+void add_generator(long long cycles) {
     int count = 1;
     int curr = 0;
     for (int i = 0; i < cycles / 12; i++) {
@@ -64,7 +64,7 @@ void add_generator(int cycles) {
 }
 
 // two parallel add instructions
-void parallel_add_generator(int cycles) {
+void parallel_add_generator(long long cycles) {
     int count = 1;
     int count2 = 1;
     int curr = 0;

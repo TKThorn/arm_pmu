@@ -18,6 +18,7 @@ static struct {
 	char *test_program;
 	int target_cpu;
 	int monitor_cpu;
+	long long cycle_count;
 } opts;
 
 static void * sensors_monitor(void *arg)
@@ -51,7 +52,7 @@ static void start_test(test_program p)
 
 	// Run the test program with performance counters!
 	enable_pmn();
-	p(1000000000);
+	p(opts.cycle_count);
 	disable_pmn();
 
 	// Read the performance counters.
@@ -74,6 +75,7 @@ static void usage(char *name)
 	fprintf(stderr, "Options:\n");
 	fprintf(stderr, "\t-c <cpu>: CPU the analysis runs on, defaults to the currently executing CPU.\n");
 	fprintf(stderr, "\t-m <cpu>: CPU the sensor monitoring runs on, defaults to one of 0-3 or 4-7.\n");
+	fprintf(stderr, "\t-n <cycles>: Number of cycles the test program does.\n");
 }
 
 int main(int argc, char **argv)
@@ -84,15 +86,19 @@ int main(int argc, char **argv)
 	// Option defaults
 	opts.target_cpu = getcpu();
 	opts.monitor_cpu = -1;
+	opts.cycle_count = 1000000;
 
 	int opt;
-	while ((opt = getopt(argc, argv, "c:m:h")) != -1) {
+	while ((opt = getopt(argc, argv, "c:m:n:h")) != -1) {
 		switch (opt) {
 		case 'c':
 			opts.target_cpu = atoi(optarg);
 			break;
 		case 'm':
 			opts.monitor_cpu = atoi(optarg);
+			break;
+		case 'n':
+			opts.cycle_count = atoll(optarg);
 			break;
 		case 'h':
 		default:
@@ -112,6 +118,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	fprintf(stderr, "Test program: %s\n", opts.test_program);
+	fprintf(stderr, "Number of cycles: %lld\n", opts.cycle_count);
 
 	// We have two CPUs with an equal number of cores.
 	if (opts.monitor_cpu == -1) opts.monitor_cpu = (opts.target_cpu + (NUMBER_OF_CPUS / 2)) % NUMBER_OF_CPUS;
