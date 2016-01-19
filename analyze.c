@@ -43,22 +43,28 @@ static void start_test(test_program p)
 	// Set up performance counters.
 	set_pmn(0, L1D_CACHE_LD);
 	set_pmn(1, L1D_CACHE_ST);
+	set_pmn(2, BR_MIS_PRED);
+	set_pmn(3, BR_PRED);
 	reset_pmn();
 	reset_ccnt();
 
 	// Run the test program with performance counters!
 	enable_pmn();
-	p();
+	p(1000000000);
 	disable_pmn();
 
 	// Read the performance counters.
-	uint32_t cycles, l1d_cache_ld, l1d_cache_st;
+	uint32_t cycles, l1d_cache_ld, l1d_cache_st, br_mis_pred, br_pred;
 	MRC_PMU(cycles, PMCCNTR);
 	l1d_cache_ld = read_pmn(0);
 	l1d_cache_st = read_pmn(1);
+	br_mis_pred = read_pmn(2);
+	br_pred = read_pmn(3);
 	printf("CPU cycles: %"PRIu32"\n", cycles);
 	printf("Level 1 data cache access, read: %"PRIu32"\n", l1d_cache_ld);
 	printf("Level 1 data cache access, write: %"PRIu32"\n", l1d_cache_st);
+	printf("Mispredicted or not predicted branch speculatively executed: %"PRIu32"\n", br_mis_pred);
+	printf("Predictable branch speculatively executed: %"PRIu32"\n", br_pred);
 }
 
 static void usage(char *name)
