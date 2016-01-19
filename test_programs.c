@@ -47,16 +47,53 @@ void branch_generator(int cycles) {
 void add_generator(int cycles) {
     int count = 1;
     int curr = 0;
-    for (int i = 0; i < cycles; i++) {
+    for (int i = 0; i < cycles / 12; i++) {
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
         asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
     }
 }
+
+// two parallel add instructions
+void parallel_add_generator(int cycles) {
+    int count = 1;
+    int count2 = 1;
+    int curr = 0;
+    int curr2 = 0;
+    for (int i = 0; i < cycles / 12; i++) {
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr2) : "r" (count2) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr2) : "r" (count2) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr2) : "r" (count2) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr2) : "r" (count2) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr2) : "r" (count2) );
+        asm volatile ("add %0, %1": "=r" (curr) : "r" (count) );
+        asm volatile ("add %0, %1": "=r" (curr2) : "r" (count2) );
+    }
+}
+
+
 
 
 test_program get_test_program(char *name)
 {
 	if(strcmp(name, "add") == 0) {
 		return add_generator;
+	} else if(strcmp(name, "parallel_add") == 0) {
+		return parallel_add_generator;
 	} else if (strcmp(name, "mov") == 0) {
 		return mov_generator;
 	} else if (strcmp(name, "branch") == 0) {
