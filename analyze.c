@@ -1,5 +1,6 @@
 #define _GNU_SOURCE
 #include <inttypes.h>
+#include <locale.h>
 #include <pthread.h>
 #include <sched.h>
 #include <stdio.h>
@@ -44,7 +45,7 @@ static void start_test(test_program p)
 	set_pmn(0, L1D_CACHE_LD);
 	set_pmn(1, L1D_CACHE_ST);
 	set_pmn(2, BR_MIS_PRED);
-	set_pmn(3, BR_PRED);
+	set_pmn(3, INST_RETIRED);
 	reset_pmn();
 	reset_ccnt();
 
@@ -54,17 +55,17 @@ static void start_test(test_program p)
 	disable_pmn();
 
 	// Read the performance counters.
-	uint32_t cycles, l1d_cache_ld, l1d_cache_st, br_mis_pred, br_pred;
+	uint32_t cycles, l1d_cache_ld, l1d_cache_st, br_mis_pred, inst_retired;
 	MRC_PMU(cycles, PMCCNTR);
 	l1d_cache_ld = read_pmn(0);
 	l1d_cache_st = read_pmn(1);
 	br_mis_pred = read_pmn(2);
-	br_pred = read_pmn(3);
-	printf("CPU cycles: %"PRIu32"\n", cycles);
-	printf("Level 1 data cache access, read: %"PRIu32"\n", l1d_cache_ld);
-	printf("Level 1 data cache access, write: %"PRIu32"\n", l1d_cache_st);
-	printf("Mispredicted or not predicted branch speculatively executed: %"PRIu32"\n", br_mis_pred);
-	printf("Predictable branch speculatively executed: %"PRIu32"\n", br_pred);
+	inst_retired = read_pmn(3);
+	printf("CPU cycles: %'"PRIu32"\n", cycles);
+	printf("Level 1 data cache access, read: %'"PRIu32"\n", l1d_cache_ld);
+	printf("Level 1 data cache access, write: %'"PRIu32"\n", l1d_cache_st);
+	printf("Mispredicted or not predicted branch speculatively executed: %'"PRIu32"\n", br_mis_pred);
+	printf("Retired instruction: %'"PRIu32"\n", inst_retired);
 }
 
 static void usage(char *name)
@@ -77,6 +78,9 @@ static void usage(char *name)
 
 int main(int argc, char **argv)
 {
+	// To make thousands separation in printf() work.
+	setlocale(LC_ALL, "");
+
 	// Option defaults
 	opts.target_cpu = getcpu();
 	opts.monitor_cpu = -1;
@@ -97,11 +101,11 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (argc != 2) {
-		usage(argv[0]);
-		return 1;
-	}
-	opts.test_program = argv[1];
+	//if (argc != 2) {
+	//	usage(argv[0]);
+	//	return 1;
+	//}
+	opts.test_program = argv[optind];
 	test_program p = get_test_program(opts.test_program);
 	if (p == NULL) {
 		fprintf(stderr, "Invalid test program %s\n", opts.test_program);
