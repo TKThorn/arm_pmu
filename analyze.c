@@ -54,6 +54,8 @@ static void start_test(test_program p)
 	for (int i = 0; i < event_count; i++) {
 		set_pmn(i, events[i]);
 	}
+	// Make sure the counters aren't running and reset them to zero.
+	disable_pmn();
 	reset_pmn();
 	reset_ccnt();
 
