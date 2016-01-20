@@ -5,6 +5,7 @@
 #include <sched.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 
 #include "armpmu_lib.h"
@@ -50,10 +51,17 @@ static void start_test(test_program p)
 	reset_pmn();
 	reset_ccnt();
 
+	// Measure the time taken.
+	struct timespec t1, t2;
+	clock_gettime(CLOCK_MONOTONIC, &t1);
+
 	// Run the test program with performance counters!
 	enable_pmn();
 	p(opts.cycle_count);
 	disable_pmn();
+
+	clock_gettime(CLOCK_MONOTONIC, &t2);
+	printf("Time: %f s\n", (double)(t2.tv_sec - t1.tv_sec) + (double)(t2.tv_nsec - t1.tv_nsec) / 1e9);
 
 	// Read the performance counters.
 	uint32_t cycles, l1d_cache_ld, l1d_cache_st, br_mis_pred, inst_retired;
