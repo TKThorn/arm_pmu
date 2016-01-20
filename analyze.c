@@ -74,10 +74,10 @@ static void start_test(test_program p)
 	// Read the performance counters.
 	uint32_t cycles, counter;
 	MRC_PMU(cycles, PMCCNTR);
-	printf("CPU cycles: %'"PRIu32"\n", cycles);
+	printf("PMCCNTR = %'"PRIu32"\n", cycles);
 	for (int i = 0; i < event_count; i++) {
 		counter = read_pmn(i);
-		printf("%s: %'"PRIu32"\n", pmn_event_name(events[i]), counter);
+		printf("%s = %'"PRIu32"\n", pmn_event_name(events[i]), counter);
 	}
 }
 
