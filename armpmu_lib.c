@@ -65,3 +65,14 @@ void reset_ccnt()
 	// Write the control register back.
 	MCR_PMU(cr, PMCR);
 }
+
+const char * pmn_event_name(int event)
+{
+	switch (event) {
+#define X(NAME, VALUE) case VALUE: return #NAME;
+	ARMPMU_EVENT_LIST
+#undef X
+	default:
+		return 0;
+	}
+}
