@@ -107,10 +107,10 @@ int main(int argc, char **argv)
 		}
 	}
 
-	//if (argc != 2) {
-	//	usage(argv[0]);
-	//	return 1;
-	//}
+	if (argc - optind != 1) {
+		usage(argv[0]);
+		return 1;
+	}
 	opts.test_program = argv[optind];
 	test_program p = get_test_program(opts.test_program);
 	if (p == NULL) {
