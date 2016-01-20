@@ -44,10 +44,16 @@ static void start_test(test_program p)
 	setaff(opts.target_cpu);
 
 	// Set up performance counters.
-	set_pmn(0, L1D_CACHE_LD);
-	set_pmn(1, L1D_CACHE_ST);
-	set_pmn(2, BR_MIS_PRED);
-	set_pmn(3, INST_RETIRED);
+	int events[] = {
+		L1D_CACHE_LD,
+		L1D_CACHE_ST,
+		BR_MIS_PRED,
+		INST_RETIRED,
+	};
+	const int event_count = (sizeof(events) / sizeof(events[0]));
+	for (int i = 0; i < event_count; i++) {
+		set_pmn(i, events[i]);
+	}
 	reset_pmn();
 	reset_ccnt();
 
@@ -64,17 +70,13 @@ static void start_test(test_program p)
 	printf("Time: %f s\n", (double)(t2.tv_sec - t1.tv_sec) + (double)(t2.tv_nsec - t1.tv_nsec) / 1e9);
 
 	// Read the performance counters.
-	uint32_t cycles, l1d_cache_ld, l1d_cache_st, br_mis_pred, inst_retired;
+	uint32_t cycles, counter;
 	MRC_PMU(cycles, PMCCNTR);
-	l1d_cache_ld = read_pmn(0);
-	l1d_cache_st = read_pmn(1);
-	br_mis_pred = read_pmn(2);
-	inst_retired = read_pmn(3);
 	printf("CPU cycles: %'"PRIu32"\n", cycles);
-	printf("Level 1 data cache access, read: %'"PRIu32"\n", l1d_cache_ld);
-	printf("Level 1 data cache access, write: %'"PRIu32"\n", l1d_cache_st);
-	printf("Mispredicted or not predicted branch speculatively executed: %'"PRIu32"\n", br_mis_pred);
-	printf("Retired instruction: %'"PRIu32"\n", inst_retired);
+	for (int i = 0; i < event_count; i++) {
+		counter = read_pmn(i);
+		printf("%s: %'"PRIu32"\n", pmn_event_name(events[i]), counter);
+	}
 }
 
 static void usage(char *name)
