@@ -17,7 +17,38 @@ void mul_generator(long long cycles) {
     int var2 = 2;
     for (int i = 0; i < cycles; i++) {
         asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+    }
+}
 
+//generate two mul operations
+void parallel_mul_generator(long long cycles) {
+    int var1 = 2;
+    int var2 = 2;
+    int var3 = 2;
+    for (int i = 0; i < cycles; i++) {
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var3) : "0" (var3), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var3) : "0" (var3), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var3) : "0" (var3), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var3) : "0" (var3), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var3) : "0" (var3), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var1) : "0" (var1), "r" (var2));
+        asm volatile ("mul %0, %1, %2" : "=r" (var3) : "0" (var3), "r" (var2));
     }
 }
 
@@ -27,6 +58,39 @@ void mov_generator(long long cycles) {
     int dest;
     for (int i = 0; i < cycles; i++) {
         asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest) : "r" (src));
+    }
+
+}
+
+//generate two move operations
+void double_mov_generator(long long cycles) {
+    int src = 1;
+    int dest1;
+    int dest2;
+    for (int i = 0; i < cycles; i++) {
+        asm volatile ("mov %0, %1" : "=r" (dest1) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest2) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest1) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest2) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest1) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest2) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest1) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest2) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest1) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest2) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest1) : "r" (src));
+        asm volatile ("mov %0, %1" : "=r" (dest2) : "r" (src));
     }
 
 }
@@ -100,6 +164,10 @@ test_program get_test_program(char *name)
 		return branch_generator;
 	} else if (strcmp(name, "mul") == 0){
 		return mul_generator;
-	}
+	} else if (strcmp(name, "parallel_mul") == 0) {
+        return parallel_mul_generator;
+    } else if (strcmp(name, "parallel_mov") == 0) {
+        return double_mov_generator;
+    }
 	return 0;
 }
