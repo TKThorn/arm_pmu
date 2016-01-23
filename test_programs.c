@@ -151,39 +151,39 @@ void parallel_add_generator(long long cycles) {
 
 // floating point operations
 void flt_generator(long long cycles) {
-    double var1 = 1.f;
-    double var2 = 1.f;
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
+    float var1 = 1.f;
+    float var2 = 1.f;
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
 }
 
 // two float operations
 void parallel_flt_generator(long long cycles) {
-    double var1 = 1.f;
-    double var2 = 1.f;
-    double var3 = 1.f;
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var3) : "0" (var3), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var3) : "0" (var3), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var3) : "0" (var3), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var3) : "0" (var3), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var3) : "0" (var3), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var1) : "0" (var1), "r" (var2));
-    asm volatile("vadd.f32 %0, %1": "=r" (var3) : "0" (var3), "r" (var2));
+    float var1 = 1.f;
+    float var2 = 1.f;
+    float var3 = 1.f;
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var3) : "0" (var3), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var3) : "0" (var3), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var3) : "0" (var3), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var3) : "0" (var3), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var3) : "0" (var3), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var1) : "0" (var1), "r" (var2));
+    asm volatile("vadd.f32 %0, %1, %2": "=r" (var3) : "0" (var3), "r" (var2));
 }
 
 
