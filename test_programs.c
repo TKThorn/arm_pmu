@@ -151,39 +151,46 @@ void parallel_add_generator(long long cycles) {
 
 // floating point operations
 void flt_generator(long long cycles) {
-    float var1 = 1.f;
-    float var2 = 1.f;
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
+    volatile float var1 = 1.f;
+    volatile float var2 = 1.f;
+    volatile float var3;
+    for(int i = 0; i < cycles/12; i++) {
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+        volatile var3 = var1 + var2;
+    }
+
 }
 
 // two float operations
 void parallel_flt_generator(long long cycles) {
-    float var1 = 1.f;
-    float var2 = 1.f;
-    float var3 = 1.f;
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var3) : "0" (var3), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var3) : "0" (var3), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var3) : "0" (var3), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var3) : "0" (var3), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var3) : "0" (var3), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var1) : "0" (var1), "f" (var2));
-    asm volatile("ADD %0, %1, %2": "=f" (var3) : "0" (var3), "f" (var2));
+    volatile float var1 = 1.f;
+    volatile float var2 = 1.f;
+    volatile float var3;
+    volatile float var4;
+    for(int i = 0; i < cycles/12; i++) {
+        volatile var1 = var3 + var4;
+        volatile var2 = var3 + var4;
+        volatile var1 = var3 + var4;
+        volatile var2 = var3 + var4;
+        volatile var1 = var3 + var4;
+        volatile var2 = var3 + var4;
+        volatile var1 = var3 + var4;
+        volatile var2 = var3 + var4;
+        volatile var1 = var3 + var4;
+        volatile var2 = var3 + var4;
+        volatile var1 = var3 + var4;
+        volatile var2 = var3 + var4;
+    }
 }
 
 
