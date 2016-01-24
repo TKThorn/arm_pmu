@@ -155,18 +155,18 @@ void flt_generator(long long cycles) {
     volatile float var2 = 1.f;
     volatile float var3;
     for(int i = 0; i < cycles/12; i++) {
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
-        volatile var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
+        var3 = var1 + var2;
     }
 
 }
@@ -178,18 +178,18 @@ void parallel_flt_generator(long long cycles) {
     volatile float var3;
     volatile float var4;
     for(int i = 0; i < cycles/12; i++) {
-        volatile var1 = var3 + var4;
-        volatile var2 = var3 + var4;
-        volatile var1 = var3 + var4;
-        volatile var2 = var3 + var4;
-        volatile var1 = var3 + var4;
-        volatile var2 = var3 + var4;
-        volatile var1 = var3 + var4;
-        volatile var2 = var3 + var4;
-        volatile var1 = var3 + var4;
-        volatile var2 = var3 + var4;
-        volatile var1 = var3 + var4;
-        volatile var2 = var3 + var4;
+        var1 = var3 + var4;
+        var2 = var3 + var4;
+        var1 = var3 + var4;
+        var2 = var3 + var4;
+        var1 = var3 + var4;
+        var2 = var3 + var4;
+        var1 = var3 + var4;
+        var2 = var3 + var4;
+        var1 = var3 + var4;
+        var2 = var3 + var4;
+        var1 = var3 + var4;
+        var2 = var3 + var4;
     }
 }
 
